@@ -12,11 +12,11 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection, prompt_death_rate
 
  
   input_screen.fill((0, 0, 0))
-  input_screen.blit(base_surface_integer, (50, 50))
+  input_screen.blit(base_surface_integer, (50, 150))
   pygame.draw.rect(input_screen, color, input_box_rect_integer, 2)
-  input_screen.blit(base_surface_infection, (50, 150))
+  input_screen.blit(base_surface_infection, (50, 350))
   pygame.draw.rect(input_screen, color, input_box_rect_infection, 2)
-  input_screen.blit(base_surface_death_rate, (50, 250))
+  input_screen.blit(base_surface_death_rate, (50, 550))
   pygame.draw.rect(input_screen, color, input_box_rect_death_rate, 2)
   pygame.display.flip()
   while True:
@@ -77,15 +77,15 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection, prompt_death_rate
                   elif active == "death_rate":
                       input_str_death_rate += event.unicode
               input_screen.fill((0, 0, 0))
-              input_screen.blit(base_surface_integer, (50, 50))
+              input_screen.blit(base_surface_integer, (50, 150))
               text_surface_integer = font.render(input_str_integer, True, color)
               input_screen.blit(text_surface_integer, (input_box_rect_integer.x+5, input_box_rect_integer.y+5))
               pygame.draw.rect(input_screen, color, input_box_rect_integer, 2)
-              input_screen.blit(base_surface_infection, (50, 150))
+              input_screen.blit(base_surface_infection, (50, 350))
               text_surface_infection = font.render(input_str_infection, True, color)
               input_screen.blit(text_surface_infection, (input_box_rect_infection.x+5, input_box_rect_infection.y+5))
               pygame.draw.rect(input_screen, color, input_box_rect_infection, 2)
-              input_screen.blit(base_surface_death_rate, (50, 250))
+              input_screen.blit(base_surface_death_rate, (50, 550 ))
               text_surface_death_rate = font.render(input_str_death_rate, True, color)
               input_screen.blit(text_surface_death_rate, (input_box_rect_death_rate.x+5, input_box_rect_death_rate.y+5))
               pygame.draw.rect(input_screen, color, input_box_rect_death_rate, 2)
