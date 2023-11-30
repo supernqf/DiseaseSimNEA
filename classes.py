@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+
 class Particle:
     def __init__(self, x, y, color, screen_width, screen_height):
         self.x = x
@@ -11,14 +12,20 @@ class Particle:
         self.vy = random.uniform(-2, 2)
         self.screen_width = screen_width
         self.screen_height = screen_height
-        self.time_since_infection = 0  # Track time since infection
+        self.time_since_infection = 0 
+    death_count = 0
+    infection_count = 0  # Class variable to count the number of infections
     def infect(self):
+        if self.state == "unaffected":  # Only increment infection count if particle is not already infected
+            Particle.infection_count += 1
         self.state = "infected"
-        self.time_since_infection = pygame.time.get_ticks()  # Record the time of infection
+        self.time_since_infection = pygame.time.get_ticks()
     def die(self):
-        self.state = "dead"
-        self.vx = 0
-        self.vy = 0
+      if self.state != "dead":  # Only increment death count if particle is not already dead
+          Particle.death_count += 1
+      self.state = "dead"
+      self.vx = 0
+      self.vy = 0
     def move(self):
         if self.state != "dead":  # Dead particles don't move
             self.x += self.vx
