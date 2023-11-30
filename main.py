@@ -1,3 +1,11 @@
+import pygame 
+import random
+from classes import Particle
+from validation import *
+from simulation import *
+# Initialize pygame
+pygame.init()
+# Set up the display
 screen_width = 800
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -42,7 +50,7 @@ while running:
                   input_box_rect_infection,
                   input_box_rect_death_rate
               )
-              start_disease_simulation(screen_width, screen_height, screen, num_infected_particles, chance_of_infection)  
+              start_disease_simulation(screen_width, screen_height, screen, num_infected_particles, chance_of_infection, death_rate)  
             # Check if Settings button is clicked
             elif (settings_button_pos[0] <= mouse_x <= settings_button_pos[0] + button_width and
                   settings_button_pos[1] <= mouse_y <= settings_button_pos[1] + button_height):
