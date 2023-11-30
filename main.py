@@ -16,8 +16,8 @@ GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 input_box_rect = pygame.Rect(50, 100, 140, 32)
 input_box_rect_integer = pygame.Rect(50, 100, 140, 32)  
-input_box_rect_infection = pygame.Rect(50, 150, 140, 32)
-input_box_rect_death_rate = pygame.Rect(50, 200, 140, 32)
+input_box_rect_infection = pygame.Rect(50, 300, 140, 32)
+input_box_rect_death_rate = pygame.Rect(50, 500, 140, 32)
 
 # Define button dimensions and positions
 button_width = 200
