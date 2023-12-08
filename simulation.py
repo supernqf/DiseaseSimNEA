@@ -95,7 +95,16 @@ def start_disease_simulation(screen_width, screen_height, screen,
     screen.blit(dead_text, (10, 30))
 
     screen.blit(pause_img, (screen_width / 2 - 25, 0))
+    if Particle.infection_count == 0:
+      screen.fill(WHITE)
+      result_text = font.render("Simulation Complete", True, BLACK)
+      result_deaths = font.render("Deaths: " + str(Particle.death_count) + " out of 1000", True, BLACK) 
+      screen.blit(result_text, (screen_width / 2 - 100, screen_height / 2 - 50))
+      screen.blit(result_deaths, (screen_width / 2 - 100, screen_height / 2))
 
     pygame.display.flip()
     pygame.time.wait(100)
+    
+
+
     
