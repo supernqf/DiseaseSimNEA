@@ -2,8 +2,9 @@ import pygame
 import random
 import time
 import validation
+
+
 class Particle:
-  
 
   def __init__(self, x, y, color, screen_width, screen_height):
     self.x = x
@@ -15,7 +16,6 @@ class Particle:
     self.screen_width = screen_width
     self.screen_height = screen_height
     self.time_since_infection = 0
-  
 
   death_count = 0
   infection_count = 0  # Class variable to count the number of infections
@@ -74,5 +74,4 @@ class Particle:
     dy = particle.y - self.y
     distance = (dx**2 + dy**2)**0.5
     return distance < 20
-  
-  
+
