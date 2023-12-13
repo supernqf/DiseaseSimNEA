@@ -2,17 +2,20 @@ import pygame
 import random
 from classes import *
 from validation import *
+from settings import *
 
 
 def start_disease_simulation(screen_width, screen_height, screen,
                              num_infected_particles, chance_of_infection,
                              death_rate):
+
   NULL_COLOR = (128, 128, 128)
   INFECTED_COLOR = (0, 255, 0)
   WHITE = (255, 255, 255)
   BLACK = (0, 0, 0)
   particles = []
   num_particles = 1000
+
   num_null_particles = num_particles - num_infected_particles
   font = pygame.font.Font(None, 24)
   for _ in range(num_infected_particles):
@@ -26,7 +29,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
     if not overlaps:
       particles.append(
         Particle(x, y, INFECTED_COLOR, screen_width, screen_height))
-  for _ in range(num_null_particles):
+  for _ in range(num_particles):
     x = random.randint(0, screen_width)
     y = random.randint(0, screen_height)
     overlaps = False
@@ -36,7 +39,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
         break
     if not overlaps:
       particles.append(Particle(x, y, NULL_COLOR, screen_width, screen_height))
-  for i in range(10):
+  for i in range(num_infected_particles):
     particles[i].infect()
 
   pause_img = pygame.image.load('pause.png')
@@ -98,13 +101,22 @@ def start_disease_simulation(screen_width, screen_height, screen,
     if Particle.infection_count == 0:
       screen.fill(WHITE)
       result_text = font.render("Simulation Complete", True, BLACK)
-      result_deaths = font.render("Deaths: " + str(Particle.death_count) + " out of 1000", True, BLACK) 
-      screen.blit(result_text, (screen_width / 2 - 100, screen_height / 2 - 50))
+      result_deaths = font.render(
+        "Deaths: " + str(Particle.death_count) + " out of 1000", True, BLACK)
+      screen.blit(result_text,
+                  (screen_width / 2 - 100, screen_height / 2 - 50))
       screen.blit(result_deaths, (screen_width / 2 - 100, screen_height / 2))
+      retry_img = pygame.image.load('retry.jpg')
+      retry_img = pygame.transform.scale(retry_img, (50, 50))
+      screen.blit(retry_img, (screen_width / 2 - 25, screen_height / 2 + 100))
+      mouse_x, mouse_y = pygame.mouse.get_pos()
+      if (screen_width / 2 - 25 <= mouse_x <= screen_width / 2 + 25
+          and screen_height / 2 + 75 <= mouse_y <= screen_height / 2 + 100):
+        from main import runsim
+        runsim()
 
     pygame.display.flip()
     pygame.time.wait(100)
-    
 
 
     
