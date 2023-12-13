@@ -55,9 +55,9 @@ def runsim():
         elif (settings_button_pos[0] <= mouse_x <=
               settings_button_pos[0] + button_width and settings_button_pos[1]
               <= mouse_y <= settings_button_pos[1] + button_height):
-          from settings import Settings
-          settings = Settings()
-          settings.setup(screen)
+          from settings import setup
+          
+          setup(screen)
     # Clear the screen
     screen.fill(WHITE)
     # Draw the Play button
