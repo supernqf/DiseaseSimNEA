@@ -13,6 +13,8 @@ def start_disease_simulation(screen_width, screen_height, screen,
   INFECTED_COLOR = (0, 255, 0)
   WHITE = (255, 255, 255)
   BLACK = (0, 0, 0)
+  BLUE = (173, 216, 230)
+  survival_rate = 1 - death_rate
   particles = []
   num_particles = total_particles
   num_null_particles = num_particles - num_infected_particles
@@ -84,7 +86,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
       if not paused:  # Only update and draw particles if not paused
         particle.move()
         particle.check_collision(particles, chance_of_infection)
-        particle.check_death(death_rate)
+        particle.check_status(death_rate, survival_rate)
       particle.draw(screen)
       last_positions.append(
         (particle.x, particle.y))  # Store the last positions of particles
@@ -105,6 +107,10 @@ def start_disease_simulation(screen_width, screen_height, screen,
       screen.blit(result_text,
                   (screen_width / 2 - 100, screen_height / 2 - 50))
       screen.blit(result_deaths, (screen_width / 2 - 100, screen_height / 2))
+      result_survived = font.render(
+        "Survived: " + str(Particle.survival_count) + " out of 1000", True, BLACK)
+      screen.blit(result_survived, (screen_width / 2 - 100, screen_height / 2 + 50))
+      
       retry_img = pygame.image.load('retry.jpg')
       retry_img = pygame.transform.scale(retry_img, (50, 50))
       screen.blit(retry_img, (screen_width / 2 - 25, screen_height / 2 + 100))
@@ -117,4 +123,3 @@ def start_disease_simulation(screen_width, screen_height, screen,
     pygame.display.flip()
     pygame.time.wait(100)
 
-    
