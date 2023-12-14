@@ -2,20 +2,19 @@ import pygame
 import random
 from classes import *
 from validation import *
-from settings import *
+
 
 
 def start_disease_simulation(screen_width, screen_height, screen,
                              num_infected_particles, chance_of_infection,
-                             death_rate):
+                             death_rate, total_particles):
 
   NULL_COLOR = (128, 128, 128)
   INFECTED_COLOR = (0, 255, 0)
   WHITE = (255, 255, 255)
   BLACK = (0, 0, 0)
   particles = []
-  num_particles = 1000
-
+  num_particles = total_particles
   num_null_particles = num_particles - num_infected_particles
   font = pygame.font.Font(None, 24)
   for _ in range(num_infected_particles):
@@ -117,6 +116,5 @@ def start_disease_simulation(screen_width, screen_height, screen,
 
     pygame.display.flip()
     pygame.time.wait(100)
-
 
     
