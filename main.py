@@ -33,6 +33,7 @@ def runsim():
   running = True
   num_infected_particles = 0
   chance_of_infection = 0.0
+  total_particles = 1000
   while running:
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -50,14 +51,13 @@ def runsim():
             input_box_rect_death_rate)
           start_disease_simulation(screen_width, screen_height, screen,
                                    num_infected_particles, chance_of_infection,
-                                   death_rate)
+                                   death_rate, total_particles)
         # Check if Settings button is clicked
         elif (settings_button_pos[0] <= mouse_x <=
               settings_button_pos[0] + button_width and settings_button_pos[1]
               <= mouse_y <= settings_button_pos[1] + button_height):
-          from settings import setup
-          
-          setup(screen)
+          from settings import particlesetup
+          total_particles = particlesetup(screen)
     # Clear the screen
     screen.fill(WHITE)
     # Draw the Play button
