@@ -1,7 +1,7 @@
 import pygame
 
 
-def setup(screen):
+def particlesetup(screen):
   screen_width = 800
   screen_height = 600
   input_screen = pygame.display.set_mode((screen_width, screen_height))
@@ -17,6 +17,7 @@ def setup(screen):
   input_screen.blit(base_surface_particles, (50, 150))
   pygame.draw.rect(input_screen, color, input_box_rect_particles, 2)
   pygame.display.flip()
+
   while True:
 
     for event in pygame.event.get():
@@ -51,3 +52,6 @@ def setup(screen):
         pygame.draw.rect(input_screen, color, input_box_rect_particles, 2)
         pygame.display.flip()
         pygame.time.wait(100)
+ 
+  
+
