@@ -103,16 +103,16 @@ def start_disease_simulation(screen_width, screen_height, screen,
       screen.fill(WHITE)
       result_text = font.render("Simulation Complete", True, BLACK)
       result_deaths = font.render(
-        "Deaths: " + str(Particle.death_count) + " out of 1000", True, BLACK)
+        "Deaths: " + str(Particle.death_count) + " out of " + str(num_particles), True, BLACK)
       screen.blit(result_text,
                   (screen_width / 2 - 100, screen_height / 2 - 50))
       screen.blit(result_deaths, (screen_width / 2 - 100, screen_height / 2))
       result_survived = font.render(
-        "Survived: " + str(Particle.survival_count) + " out of 1000", True, BLACK)
+        "Survived: " + str(Particle.survival_count) + " out of " + str(num_particles),  True, BLACK)
       screen.blit(result_survived, (screen_width / 2 - 100, screen_height / 2 + 50))
       
-      retry_img = pygame.image.load('retry.jpg')
-      retry_img = pygame.transform.scale(retry_img, (50, 50))
+      retry_img = pygame.image.load('retry.png')
+      retry_img = pygame.transform.scale(retry_img, (100, 100))
       screen.blit(retry_img, (screen_width / 2 - 25, screen_height / 2 + 100))
       mouse_x, mouse_y = pygame.mouse.get_pos()
       if (screen_width / 2 - 25 <= mouse_x <= screen_width / 2 + 25
