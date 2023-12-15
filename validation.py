@@ -108,3 +108,4 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
         pygame.draw.rect(input_screen, color, input_box_rect_death_rate, 2)
         pygame.display.flip()
         pygame.time.wait(100)
+
