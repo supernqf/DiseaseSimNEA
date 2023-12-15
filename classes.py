@@ -18,6 +18,7 @@ class Particle:
     self.time_since_infection = 0
   death_count = 0
   infection_count = 0
+  
   survival_count = 0 # Class variable to count the number of infections
   
   def infect(self):
@@ -73,14 +74,20 @@ class Particle:
 
   def check_status(self, death_rate, survival_rate):
     generaltickspeed = 3000
+    
     # Check if enough time has passed (1 second) to consider changing the state to dead
     if self.state == "infected" and (pygame.time.get_ticks() -
                                      self.time_since_infection) >= 1000:
       if random.random() < death_rate:
         self.die()
       self.time_since_infection += 1000
-      if self.time_since_infection >= generaltickspeed * (1/survival_rate):
-        self.survive()
+      if death_rate != 1:
+        if self.time_since_infection >= generaltickspeed * (1/survival_rate) and death_rate != 0 or 1:
+          self.survive()
+        if death_rate == 0 and self.time_since_infection >= generaltickspeed:
+          self.survive()
+      
+        
         
   def collides(self, particle):
     dx = particle.x - self.x
