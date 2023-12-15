@@ -21,6 +21,7 @@ def runsim():
   input_box_rect_integer = pygame.Rect(50, 100, 140, 32)
   input_box_rect_infection = pygame.Rect(50, 300, 140, 32)
   input_box_rect_death_rate = pygame.Rect(50, 500, 140, 32)
+  
 
   # Define the button's dimensions and positions
   button_width = 200
