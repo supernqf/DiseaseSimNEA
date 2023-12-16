@@ -16,11 +16,12 @@ class Particle:
     self.screen_width = screen_width
     self.screen_height = screen_height
     self.time_since_infection = 0
+
   death_count = 0
   infection_count = 0
-  
-  survival_count = 0 # Class variable to count the number of infections
-  
+
+  survival_count = 0  # Class variable to count the number of infections
+
   def infect(self):
     if self.state == "unaffected":  # Only increment infection count if particle is not already infected
       Particle.infection_count += 1
@@ -73,8 +74,8 @@ class Particle:
           break  # Break the loop once infected by one infected particle
 
   def check_status(self, death_rate, survival_rate):
-    generaltickspeed = 3000
-    
+    generaltickspeed = 30000
+
     # Check if enough time has passed (1 second) to consider changing the state to dead
     if self.state == "infected" and (pygame.time.get_ticks() -
                                      self.time_since_infection) >= 1000:
@@ -82,15 +83,15 @@ class Particle:
         self.die()
       self.time_since_infection += 1000
       if death_rate != 1:
-        if self.time_since_infection >= generaltickspeed * (1/survival_rate) and death_rate != 0 or 1:
+        if self.time_since_infection >= generaltickspeed * (
+            1 / survival_rate) and death_rate != 0 and death_rate != 1:
           self.survive()
         if death_rate == 0 and self.time_since_infection >= generaltickspeed:
           self.survive()
-      
-        
-        
+
   def collides(self, particle):
     dx = particle.x - self.x
     dy = particle.y - self.y
     distance = (dx**2 + dy**2)**0.5
     return distance < 20
+
