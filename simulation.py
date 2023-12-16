@@ -24,7 +24,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
     y = random.randint(0, screen_height)
     overlaps = False
     for particle in particles:
-      if abs(particle.x - x) < 20 and abs(particle.y - y) < 20:
+      if abs(particle.x - x) < 1 and abs(particle.y - y) < 1:
         overlaps = True
         break
     if not overlaps:
@@ -122,4 +122,5 @@ def start_disease_simulation(screen_width, screen_height, screen,
 
     pygame.display.flip()
     pygame.time.wait(100)
+
 
