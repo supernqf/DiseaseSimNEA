@@ -37,6 +37,7 @@ def runsim():
   total_particles = 1000
   while running:
     for event in pygame.event.get():
+      
       if event.type == pygame.QUIT:
         running = False
       mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -61,6 +62,12 @@ def runsim():
           total_particles = particlesetup(screen)
     # Clear the screen
     screen.fill(WHITE)
+    background = pygame.image.load("backky.png")
+    
+    screen.blit(background, (0, 0 ))
+    logo_img = pygame.image.load('logo.png')
+    logo_img = pygame.transform.scale(logo_img, (750, 300))
+    screen.blit(logo_img, (screen_width / 2 - 350 , screen_height - 650))
     # Draw the Play button
     pygame.draw.rect(screen, GREEN,
                      (*play_button_pos, button_width, button_height))
@@ -85,4 +92,5 @@ def runsim():
   pygame.quit()
 
 
-runsim()
+
+
