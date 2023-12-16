@@ -109,3 +109,4 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
         pygame.display.flip()
         pygame.time.wait(100)
 
+
