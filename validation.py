@@ -47,10 +47,13 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
   input_screen.blit(base_surface_death_rate, (50, 550))
   pygame.draw.rect(input_screen, color, input_box_rect_death_rate, 2)
 
-    # Display labeled boxes
+   
   presetboxes = displayboxes(input_screen, font, color)
   pygame.display.flip()
-  
+  value_integer = None
+  value_infection = None
+  value_death_rate = None
+
   while True:
     mouse_pos = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -131,20 +134,7 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
             input_str_infection = ''
             base_surface_infection = font.render(
               prompt_infection + " (Please enter a valid float)", True, color)
-        elif event.key == pygame.K_RETURN and active == "death_rate":
-          try:
-            value_death_rate = float(input_str_death_rate)
-            if 0 <= value_death_rate <= 1:
-              return value_integer, value_infection, value_death_rate
-            else:
-              input_str_death_rate = ''
-              base_surface_death_rate = font.render(
-                prompt_death_rate + " (Please enter a value between 0 and 1)",
-                True, color)
-          except ValueError:
-            input_str_death_rate = ''
-            base_surface_death_rate = font.render(
-              prompt_death_rate + " (Please enter a valid float)", True, color)
+        
         elif event.key == pygame.K_BACKSPACE:
           if active == "integer":
             input_str_integer = input_str_integer[:-1]
@@ -177,6 +167,25 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
               active = "infection"
             elif input_box_rect_death_rate.collidepoint(mouse_pos):
                 active = "death_rate"
+        elif event.key == pygame.K_RETURN and active == "death_rate":
+          try:
+            value_death_rate = float(input_str_death_rate)
+            if 0 <= value_death_rate <= 1:
+              # Check if all input values are set
+              if value_integer is not None and value_infection is not None:
+                return value_integer, value_infection, value_death_rate
+              else:
+                # If any input is missing, set focus to the next input box
+                if value_integer is None:
+                  active = "integer"
+                elif value_infection is None:
+                  active = "infection"
+                else:
+                  active = "death_rate"
+          except ValueError:
+              input_str_death_rate = ''
+              base_surface_death_rate = font.render(
+                  prompt_death_rate + " (Please enter a valid float)", True, color)
         input_screen.fill((0, 0, 0))
         input_screen.blit(base_surface_integer, (50, 150))
         text_surface_integer = font.render(input_str_integer, True, color)
@@ -199,5 +208,3 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
         pygame.draw.rect(input_screen, color, input_box_rect_death_rate, 2)
         pygame.display.flip()
         pygame.time.wait(100)
-
-
