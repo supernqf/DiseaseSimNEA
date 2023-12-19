@@ -58,20 +58,20 @@ def get_valid_inputs(screen, prompt_integer, prompt_infection,
     for box, _ in presetboxes:
       if box.collidepoint(mouse_pos):
           if click[0] == 1:  # Left mouse button clicked
-              if box == presetboxes[0][0]:  # Placeholder values for Default 1
+              if box == presetboxes[0][0]:  # values for d1
                   input_str_integer = '50'
                   input_str_infection = '0.5'
                   input_str_death_rate = '0.1'
-              elif box == presetboxes[1][0]:  # Placeholder values for Default 2
+              elif box == presetboxes[1][0]:  # values for d2
                   input_str_integer = '100'
                   input_str_infection = '0.3'
                   input_str_death_rate = '0.05'
-              elif box == presetboxes[2][0]:  # Placeholder values for Default 3
+              elif box == presetboxes[2][0]:  # values for d3
                   input_str_integer = '25'
                   input_str_infection = '0.7'
                   input_str_death_rate = '0.2'
 
-    # Redraw input boxes with updated placeholder values
+    # Redraw input boxes with updated values
     input_screen.fill((0, 0, 0))
     input_screen.blit(base_surface_integer, (50, 150))
     text_surface_integer = font.render(input_str_integer, True, color)
