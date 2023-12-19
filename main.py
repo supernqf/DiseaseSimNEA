@@ -66,8 +66,8 @@ def runsim():
     
     screen.blit(background, (0, 0 ))
     logo_img = pygame.image.load('logo.png')
-    logo_img = pygame.transform.scale(logo_img, (750, 300))
-    screen.blit(logo_img, (screen_width / 2 - 350 , screen_height - 650))
+    logo_img = pygame.transform.scale(logo_img, (750, 600))
+    screen.blit(logo_img, (screen_width / 2 - 350 , screen_height - 850))
     # Draw the Play button
     pygame.draw.rect(screen, GREEN,
                      (*play_button_pos, button_width, button_height))
@@ -90,6 +90,7 @@ def runsim():
     # Cap the frame rate
     pygame.time.Clock().tick(60)
   pygame.quit()
+
 
 
 
