@@ -49,15 +49,20 @@ def start_disease_simulation(screen_width, screen_height, screen,
   play_img = pygame.transform.scale(play_img, (50, 50))
   sim_running = True
   paused = False
-  # Main simulation loop
+  
   last_positions = []  # list to store the last positions of particles
+  # pause button
   pause_img = pygame.image.load('pause.png')
   pause_img = pygame.transform.scale(pause_img, (50, 50))
-  play_img = pygame.image.load('play.png')
-  play_img = pygame.transform.scale(play_img, (50, 50))
+  # infect pen
   infectpen_img = pygame.image.load('infectpen.png')
   infectpen_img = pygame.transform.scale(infectpen_img, (35, 35))
   drawing_mode = False
+  #speed controls
+  speed = 100
+  speedup_button = pygame.image.load('speed.png')
+  speedup_button = pygame.transform.scale(speedup_button, (50, 50))
+  speeddown_button = pygame.transform.flip(speedup_button, True, False)
 
   def draw_particle(mouse_x, mouse_y):
     new_particle = Particle(mouse_x, mouse_y, INFECTED_COLOR, screen_width,
@@ -75,7 +80,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
       if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
           mouse_pos = pygame.mouse.get_pos()
-          infectpen_rect = infectpen_img.get_rect(topleft=(screen_width/2 + 25, 0))
+          infectpen_rect = infectpen_img.get_rect(topleft=(screen_width/2 + 100, 0))
           pause_button_rect = pause_img.get_rect(topleft=(screen_width / 2 -
                                                           25, 0))
           if infectpen_rect.collidepoint(mouse_pos):
@@ -90,7 +95,13 @@ def start_disease_simulation(screen_width, screen_height, screen,
                 play_img,
                 (screen_width / 2 - 25,
                  0))  # Change the pause image to play image while paused
-
+          if speedup_button.get_rect(topleft=(screen_width / 2 + 55, 0)).collidepoint(mouse_pos):
+            speed -= 1
+            print("speedup")
+          elif speeddown_button.get_rect(topleft=(screen_width / 2 - 105, 0)).collidepoint(mouse_pos):
+            speed += 1
+            print("speeddown")
+    pygame.display.flip()
     screen.fill(WHITE)
     infected_text = font.render("Infected: " + str(Particle.infection_count),
                                 True, BLACK)
@@ -112,8 +123,10 @@ def start_disease_simulation(screen_width, screen_height, screen,
     screen.blit(infected_text, (10, 10))
     dead_text = font.render("Dead: " + str(Particle.death_count), True, BLACK)
     screen.blit(dead_text, (10, 30))
-    screen.blit(infectpen_img, (screen_width/2 + 25, 0))
-    screen.blit(pause_img, (screen_width / 2 - 25, 0))
+    screen.blit(infectpen_img, (screen_width/2 + 100, 0)) # Render infect button
+    screen.blit(pause_img, (screen_width / 2 - 25, 0)) # Render pause button
+    screen.blit(speedup_button, (screen_width / 2 + 55, 0))  # Render speed up button
+    screen.blit(speeddown_button, (screen_width / 2 - 105, 0))  # Render speed down button
     if Particle.infection_count == 111110:
       screen.fill(WHITE)
       result_text = font.render("Simulation Complete", True, BLACK)
@@ -137,5 +150,6 @@ def start_disease_simulation(screen_width, screen_height, screen,
         from main import runsim
         runsim()
     pygame.display.flip()
-    pygame.time.wait(100)
+    pygame.time.wait(speed)
+
 
