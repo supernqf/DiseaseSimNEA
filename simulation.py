@@ -2,12 +2,9 @@ import pygame
 import random
 from classes import *
 from validation import *
-
-
 def start_disease_simulation(screen_width, screen_height, screen,
                              num_infected_particles, chance_of_infection,
                              death_rate, total_particles):
-  
 
   NULL_COLOR = (128, 128, 128)
   INFECTED_COLOR = (0, 255, 0)
@@ -15,15 +12,11 @@ def start_disease_simulation(screen_width, screen_height, screen,
   BLACK = (0, 0, 0)
   BLUE = (173, 216, 230)
   survival_rate = 1 - death_rate
-  new_particles = []
   particles = []
   num_particles = int(total_particles)
   num_null_particles = num_particles - num_infected_particles
   font = pygame.font.Font(None, 24)
-  def draw_particle(pos_x, pos_y):
-    # Creates a new particle at the pens position and adds it to the list
-    new_particles.append(Particle(*mouse_pos, INFECTED_COLOR, screen_width, screen_height))
-    Particle.infection_count += 1
+
   for _ in range(num_infected_particles):
     x = random.randint(0, screen_width)
     y = random.randint(0, screen_height)
@@ -32,7 +25,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
       if abs(particle.x - x) < 1 and abs(particle.y - y) < 1:
         overlaps = True
         break
-    
+
     if not overlaps:
       particles.append(Particle(x, y, INFECTED_COLOR, screen_width, screen_height))
   for _ in range(num_particles):
@@ -47,7 +40,6 @@ def start_disease_simulation(screen_width, screen_height, screen,
       particles.append(Particle(x, y, NULL_COLOR, screen_width, screen_height))
   for i in range(num_infected_particles):
     particles[i].infect()
-
   pause_img = pygame.image.load('pause.png')
   pause_img = pygame.transform.scale(pause_img, (50, 50))
   play_img = pygame.image.load('play.png')
@@ -63,6 +55,13 @@ def start_disease_simulation(screen_width, screen_height, screen,
   infectpen_img = pygame.image.load('infectpen.png')
   infectpen_img = pygame.transform.scale(infectpen_img, (50, 50))
   drawing_mode = False
+  def draw_particle(mouse_x, mouse_y):
+    new_particle = Particle(mouse_x, mouse_y, INFECTED_COLOR, screen_width, screen_height)
+    new_particle.infect()  # Newly drawn particle gets infected
+    for particle in particles:
+      if particle.state == "infected" and new_particle.collides(particle):
+       new_particle.infect()  # Infect other particles in contact with the newly drawn particle
+    particles.append(new_particle)
   # Main simulation loop
   while sim_running:
     for event in pygame.event.get():
@@ -74,13 +73,9 @@ def start_disease_simulation(screen_width, screen_height, screen,
             25, 0))
           if infectpen_rect.collidepoint(mouse_pos):
             drawing_mode = not drawing_mode
-
           if drawing_mode:
-            # Create a new particle at the mouse position and add it to the new_particles list
-            new_particles.append(Particle(*mouse_pos, INFECTED_COLOR, screen_width, screen_height))
-            # Check interactions of newly drawn particles with existing particles
-            for new_particle in new_particles:
-                new_particle.check_interaction(particles, chance_of_infection)
+            draw_particle(*mouse_pos)
+            Particle.infection_count += 1
           elif pause_button_rect.collidepoint(mouse_pos):
             paused = not paused
             if paused:
@@ -88,7 +83,7 @@ def start_disease_simulation(screen_width, screen_height, screen,
                 play_img,
                 (screen_width / 2 - 25,
                  0))  # Change the pause image to play image while paused
-  
+
     screen.fill(WHITE)
     infected_text = font.render("Infected: " + str(Particle.infection_count),
                                 True, BLACK)
@@ -98,20 +93,12 @@ def start_disease_simulation(screen_width, screen_height, screen,
     for particle in particles:
       if not paused:  # Only update and draw particles if not paused
         particle.move()
+        particle.check_interaction(particles, chance_of_infection)
         particle.check_collision(particles, chance_of_infection)
         particle.check_status(death_rate, survival_rate)
       particle.draw(screen)
       last_positions.append((particle.x, particle.y))  # Store the last positions of particles
-    for particle in new_particles:
-      if not paused:
-          particle.move()
-          particle.check_collision(particles, chance_of_infection)  # Check for collision with existing particles
-          particle.check_status(death_rate, survival_rate)
-      particle.draw(screen)
-      last_positions.append((particle.x, particle.y))
-    particles.extend(new_particles)
-    new_particles = []
-    
+
     infected_text = font.render("Infected: " + str(Particle.infection_count),
                                 True, BLACK)
     screen.blit(infected_text, (10, 10))
@@ -133,7 +120,6 @@ def start_disease_simulation(screen_width, screen_height, screen,
         str(num_particles), True, BLACK)
       screen.blit(result_survived,
                   (screen_width / 2 - 100, screen_height / 2 + 50))
-
       retry_img = pygame.image.load('retry.png')
       retry_img = pygame.transform.scale(retry_img, (100, 100))
       screen.blit(retry_img, (screen_width / 2 - 25, screen_height / 2 + 100))
@@ -142,7 +128,6 @@ def start_disease_simulation(screen_width, screen_height, screen,
           and screen_height / 2 + 75 <= mouse_y <= screen_height / 2 + 100):
         from main import runsim
         runsim()
-
     pygame.display.flip()
     pygame.time.wait(100)
 
