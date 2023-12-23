@@ -16,12 +16,13 @@ def runsim():
   # Define the colours used
   WHITE = (255, 255, 255)
   GREEN = (0, 255, 0)
+  PGREEN = (162, 255, 178)
+  DGREEN = (10, 128, 30)
   BLACK = (0, 0, 0)
   input_box_rect = pygame.Rect(50, 100, 140, 32)
   input_box_rect_integer = pygame.Rect(50, 100, 140, 32)
   input_box_rect_infection = pygame.Rect(50, 300, 140, 32)
   input_box_rect_death_rate = pygame.Rect(50, 500, 140, 32)
-  
 
   # Define the button's dimensions and positions
   button_width = 200
@@ -37,7 +38,7 @@ def runsim():
   total_particles = 1000
   while running:
     for event in pygame.event.get():
-      
+
       if event.type == pygame.QUIT:
         running = False
       mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -49,7 +50,7 @@ def runsim():
           num_infected_particles, chance_of_infection, death_rate = get_valid_inputs(
             screen, "Enter number of infected particles:",
             "Enter chance of infection (0-1):", "Enter death rate (0-1):",
-            font, GREEN, input_box_rect_integer, input_box_rect_infection,
+            font, DGREEN, input_box_rect_integer, input_box_rect_infection,
             input_box_rect_death_rate)
           start_disease_simulation(screen_width, screen_height, screen,
                                    num_infected_particles, chance_of_infection,
@@ -63,13 +64,13 @@ def runsim():
     # Clear the screen
     screen.fill(WHITE)
     background = pygame.image.load("backky.png")
-    
-    screen.blit(background, (0, 0 ))
+
+    screen.blit(background, (0, 0))
     logo_img = pygame.image.load('logo.png')
     logo_img = pygame.transform.scale(logo_img, (750, 600))
-    screen.blit(logo_img, (screen_width / 2 - 350 , screen_height - 850))
+    screen.blit(logo_img, (screen_width / 2 - 350, screen_height - 850))
     # Draw the Play button
-    pygame.draw.rect(screen, GREEN,
+    pygame.draw.rect(screen, PGREEN,
                      (*play_button_pos, button_width, button_height))
     play_text = font.render('Play', True, BLACK)
     screen.blit(
@@ -77,7 +78,7 @@ def runsim():
       (play_button_pos[0] + (button_width - play_text.get_width()) // 2,
        play_button_pos[1] + (button_height - play_text.get_height()) // 2))
     # Draw the Settings button
-    pygame.draw.rect(screen, GREEN,
+    pygame.draw.rect(screen, PGREEN,
                      (*settings_button_pos, button_width, button_height))
     settings_text = font.render('Settings', True, BLACK)
     screen.blit(settings_text,
@@ -85,11 +86,13 @@ def runsim():
                  (button_width - settings_text.get_width()) // 2,
                  settings_button_pos[1] +
                  (button_height - settings_text.get_height()) // 2))
+    
     # Update the display to ensure it is accurate.
     pygame.display.flip()
     # Cap the frame rate
     pygame.time.Clock().tick(60)
   pygame.quit()
+
 
 
 
