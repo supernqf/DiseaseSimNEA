@@ -85,6 +85,8 @@ def start_disease_simulation(screen_width, screen_height, screen,
       if particle.state == "infected" and new_particle.collides(particle):
         new_particle.infect()
     particles.append(new_particle)
+    Particle.infection_count = Particle.infection_count + 1
+    
   
   # Function to draw a null particle on mouse click
   def draw_nparticle(mouse_x, mouse_y):
@@ -109,7 +111,6 @@ def start_disease_simulation(screen_width, screen_height, screen,
             drawing_moden = not drawing_moden
           if drawing_modei:
             draw_iparticle(*mouse_pos)
-            Particle.infection_count += 1
           if drawing_moden:
             draw_nparticle(*mouse_pos)
             print("Null")
